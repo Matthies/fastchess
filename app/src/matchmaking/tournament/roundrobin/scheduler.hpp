@@ -86,10 +86,11 @@ class RoundRobinScheduler : public Scheduler {
     }
 
     std::size_t total() const override {
-        if (t_type == TournamentType::ROUNDROBIN)
-            return (n_players * (n_players - 1) / 2) * n_rounds * n_games_per_round;
-        else
-            return (n_seeds * n_players -  n_seeds * (n_seeds + 1) / 2) * n_rounds * n_games_per_round;
+        std::size_t n_pairings = (t_type == TournamentType::ROUNDROBIN ?
+            n_players * (n_players - 1) / 2 :
+            n_seeds * n_players -  n_seeds * (n_seeds + 1) / 2);
+
+            return n_pairings * n_rounds * n_games_per_round;
     }
 
    private:
